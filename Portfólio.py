@@ -159,7 +159,7 @@ class MotifFinding:
             Este algoritmo apresenta um elevado nº de soluções parciais em cada iteração.Selecionando o melhor resultado no final
            
        '''
-        for y in range(len(self.seqs)):              # Considerar apenas as 2 primeiras sequências 
+        for y in range(len(self.seqs)):              # Considera apenas as 2 primeiras sequências 
             seque=(self.seqSize(y), self.seqs[0:2])  
             restante = self.seqs[2:] 
             ExhS= seque.exhaustiveSearch()           #Maximiza a função de avaliação(score)
@@ -193,22 +193,22 @@ class MotifFinding:
             sequências distintas.
             '''
         best_Score_list = []
-        for x in range(1000): #inicia com valores aleatórios todas as posições
+        for x in range(1000): #Inicia com valores aleatórios todas as posições
             startpos = [random.randint(0, self.seqSize(x)-self.motifSize) for x in range(len(self.seqs))]
-            motif = self.createMotifFromIndexes(startpos) #perfil construido com todas as posições iniciais
+            motif = self.createMotifFromIndexes(startpos) #Perfil construido com todas as posições iniciais
             motif.createPWM()
             score = self.scoreMult(startpos)
             novo_score = score + 0.000001
             while score < novo_score:
-                for i in range(len(startpos)): #avaliar a melhor posição inicial para cada sequência baseando-se no perfil
+                for i in range(len(startpos)): #Avalia a melhor posição inicial para cada sequência baseando-se no perfil
                     startpos[i] = motif.mostProbableSeq(self.seqs[i])
-                score = novo_score #aqui vamos verificar se houve alguma melhoria
+                score = novo_score #Aqui vamos verificar se houve alguma melhoria
                 novo_score = self.scoreMult(startpos)
                 motif = self.createMotifFromIndexes(startpos)
                 motif.createPWM()
             best_Score_list.append(novo_score)
 
-        return best_Score_list #lista com os scores melhores encontrados
+        return best_Score_list #Lista com os scores melhores encontrados
     
     # Gibbs sampling
     #test:
@@ -231,22 +231,22 @@ class MotifFinding:
     def gibbs (self, iteration=100): 
         from random import randint
         from random import random
-        startpos = [random.randint(0, self.seqSize(x)-self.motifSize) for x in range(len(self.seqs))] #Escolher posições iniciais de forma aleatória
+        startpos = [random.randint(0, self.seqSize(x)-self.motifSize) for x in range(len(self.seqs))] #Escolhe posições iniciais de forma aleatória
         bestMotifs = startpos[:]
         bestMotifsScore=self.scoreMult(startpos)
-        time_last_improvement=0 # correr até enquanto der para encontrar scores melhores
+        time_last_improvement=0  # Até enquanto der para encontrar scores melhores
         while time_last_improvement< iteration:
              time_last_improvement += 1
-             for x in range(iteration): #Escolher aleatoriamente uma sequência 
-                i = random.randite(0,len(self.seqs)-1) #posição
+             for x in range(iteration): #Escolhe aleatoriamente uma sequência 
+                i = random.randite(0,len(self.seqs)-1) #Posição
                 #randseq=self.seqs[i] 
                 startpos.pop(i)
-                outraseq=self.seqs.pop(i) #indaca qual a posição da sequencia que foi retirada
+                outraseq=self.seqs.pop(i) #Indica qual a posição da sequência que foi retirada
                 perfil=self.createMotifFromIndexes(startpos) 
-                perfil.create_PWM() #perfil P das sequencias s
-                self.seqs.insert(i,outraseq) #adiciona a sequencia que foi removida anteriormente
-                probabilidades=perfil.probAllPositions(self.seqs[outraseq]) # seleciona a posição baseada na roullette
-                roul=self.roulette(probabilidades) #criar a roleta de probabilidades
+                perfil.create_PWM() #Perfil P das sequências s
+                self.seqs.insert(i,outraseq) #Adiciona a sequência que foi removida anteriormente
+                probabilidades=perfil.probAllPositions(self.seqs[outraseq]) # Seleciona a posição baseada na roullette
+                roul=self.roulette(probabilidades) #Cria a roleta de probabilidades
                 startpos.insert(i,roul)
                 score= self.scoreMult(startpos)
                 if score> bestMotifsScore: 
