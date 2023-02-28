@@ -239,7 +239,6 @@ class MotifFinding:
              time_last_improvement += 1
              for x in range(iteration): #Escolhe aleatoriamente uma sequência 
                 i = random.randite(0,len(self.seqs)-1) #Posição
-                #randseq=self.seqs[i] 
                 startpos.pop(i)
                 outraseq=self.seqs.pop(i) #Indica qual a posição da sequência que foi retirada
                 perfil=self.createMotifFromIndexes(startpos) 
