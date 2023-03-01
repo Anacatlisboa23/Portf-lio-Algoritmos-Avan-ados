@@ -5,8 +5,6 @@
 
 Alunas:
 
-Ana Lisboa 
-pg49831
+Ana Lisboa pg49831
 
-Mariana Silva  
-pg45966
+Mariana Silva  pg45966
