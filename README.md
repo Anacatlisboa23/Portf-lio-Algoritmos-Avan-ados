@@ -3,8 +3,10 @@
 
 
 
-Alunas: "\n" 
-Ana Lisboa "\n" 
+Alunas:
+
+Ana Lisboa 
 pg49831
-Mariana Silva "\n" 
+
+Mariana Silva  
 pg45966
