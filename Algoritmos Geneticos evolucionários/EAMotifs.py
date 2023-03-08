@@ -38,15 +38,7 @@ class EAMotifsInt (EvolAlgorithm):
             ind.setFitness(fit)
 
 
-import unittest
-class TestStringMethods(unittest.TestCase):
-    def test1():
-        t=EAMotifsReal (50,10,100, "exemploMotifs.txt")
-        t.run
-        t.printBestSolution()
-        
-if _name_ == '_main_':
-    unittest.main()
+
 
 class EAMotifsReal (EvolAlgorithm): 
     """ O EAMotifsReal receber o tamanho da população, o nº de iterações,
@@ -87,7 +79,13 @@ class EAMotifsReal (EvolAlgorithm):
             fit = self.motifs.score(sol)
             ind.setFitness(fit)
 
-
+import unittest
+class TestStringMethods(unittest.TestCase):
+    def test1():
+        t=EAMotifsReal (50,10,100, "exemploMotifs.txt")
+        t.run
+        t.printBestSolution()
+    
 
 def test1():
     t=EAMotifsReal (50,10,100, "exemploMotifs.txt")
@@ -107,6 +105,5 @@ def test2():
     ea.run()
     ea.printBestSolution()
 
-
-test1()
-# test2()
+if _name_ == '_main_':
+    unittest.main()
