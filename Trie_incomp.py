@@ -15,7 +15,7 @@ class Trie:
         self.nodes[origin][symbol] = self.num
         self.nodes[self.num] = {}
     
-    def add_pattern(self, p): #p=padrão
+    def add_pattern(self, p:str): #p=padrão
         """ Função que permite adicionar um padrão à trie.
 
         Argumento:
@@ -28,7 +28,7 @@ class Trie:
                 node=self.nodes[node][p[position]]
 
 
-    def trie_from_patterns(self, pats): #pats: lista padrões
+    def trie_from_patterns(self, pats:list[]): #pats: lista padrões
         """Função que permite adicionar cunjunto de padrões à trie
 
         Argumento:
@@ -37,7 +37,17 @@ class Trie:
         for p in pats:
              self.add_pattern(p)
        
-    def prefix_trie_match(self, text): #text é a string que derá match contra a arvore
+    def prefix_trie_match(self, text:str)-> str: #text é a string que derá match contra a arvore
+        ''' 
+        Search for patterns as prefixes of the sequence 'text'.
+        
+        Args:
+        text (str)
+         
+        Returns:
+        pattern (str), se o padrão for encontrado.
+        None, se o padrão não for encontrado.
+        '''
         pos = 0 # posição inicial
         match = "" #lista vazia 
         node = 0 #node 0, inicial
@@ -52,7 +62,16 @@ class Trie:
             else : return None
     
         
-    def trie_matches(self, text):
+    def trie_matches(self, text:str)->list[]:
+        """ f a pattern is represented in the trie is a prefix of the sequence (self.prefix_trie_match)
+        this method will search for occurrences over the whole text. 
+
+        Args:
+            text (str)
+
+        Returns:
+            list[]: lista de ocorrencia dos padrões no texto. Cada ocorrencia é um tuple (índice,padrão)
+        """
         res = []
         for i in range(len(text)):
             m=self.prefix_trie_match(text[i:])

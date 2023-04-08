@@ -18,7 +18,7 @@ class SuffixTree:
         self.nodes[origin][1][symbol] = self.num
         self.nodes[self.num] = (leafnum,{})
         
-    def add_suffix(self, p, sufnum):
+    def add_suffix(self, p:str, sufnum:int):
         """ Fução que permite adicionar sufixos á árvore de sufixos
 
         Args:
@@ -37,7 +37,7 @@ class SuffixTree:
         self.add_leaf(node, sufnum)
         return None
     
-    def suffix_tree_from_seq(self, text):
+    def suffix_tree_from_seq(self, text:str):
         """ Função usada para criar a árvore de sufixos apartir da string text.
 
         Args:
@@ -47,7 +47,18 @@ class SuffixTree:
         for i in range(len(t)): #Divide o texto
             self.add_suffix(t[i:], i) # nº de seq. que são adicionadas à àrvore
             
-    def find_pattern(self, pattern):
+    def find_pattern(self, pattern:str)->list[]:
+        '''
+        Procura padrões na trie. 
+        Se o padrão for encontrado, as leaves embaixo do node são devolvidas pelo self.get_leafes_below().
+        Caso contrario, a procura falha, retorna None. 
+     
+        Ars:
+        pattern (str) 
+        
+        Returns:
+        Lista (list) de posições dos padrões ocorridos ou None se não houver matches.
+        '''
         pos = 0
         node = 0
         for pos in range(len(pattern)):
@@ -57,7 +68,17 @@ class SuffixTree:
         return self.get_leafes_below(node)
         
 
-    def get_leafes_below(self, node):
+    def get_leafes_below(self, node:int)->list[]:
+        '''
+        Colects the leaves under a given node.
+        
+        Args:
+        node (int)
+        
+        Returns:
+        Lista (list) das leaves a baixo do node.
+        
+        '''
         res = []
         if self.nodes[node][0] >=0: 
             res.append(self.nodes[node][0])            
