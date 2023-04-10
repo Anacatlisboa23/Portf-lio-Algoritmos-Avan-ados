@@ -56,7 +56,7 @@ class Automata:
             seq: uma string que representa a sequência de entrada.
 
             Returns: 
-             list: lista de inteiros que representa a sequência de estados percorridos pelo autômato ao aplicar a sequência de entrad
+             list: lista de inteiros que representa a sequência de estados percorridos pelo autômato ao aplicar a sequência de entrada
             """
 
         q = 0
