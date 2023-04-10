@@ -51,7 +51,7 @@ class Trie:
         pos = 0 # posição inicial
         match = "" #lista vazia 
         node = 0 #node 0, inicial
-        while pos < len(text): #vai correr o text atél encontrarem os matches
+        while pos < len(text): #vai correr o text até encontrar os matches
             if text[pos] in self.nodes[node].keys(): #vai ver se é valido
                 node= self.nodes[node][text[pos]]
                 match += text[pos]
