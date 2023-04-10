@@ -3,7 +3,7 @@
 class Trie:
     
     def __init__(self):
-        self.nodes = { 0:{} } # dictionary
+        self.nodes = { 0:{} } 
         self.num = 0
     
     def print_trie(self):
