@@ -39,7 +39,7 @@ class Trie:
        
     def prefix_trie_match(self, text:str)-> str: #text é a string que derá match contra a arvore
         ''' 
-        Search for patterns as prefixes of the sequence 'text'.
+        Procura padrões prefixos da sequência 'text'.
         
         Args:
         text (str)
@@ -63,8 +63,7 @@ class Trie:
     
         
     def trie_matches(self, text:str)->list[]:
-        """ f a pattern is represented in the trie is a prefix of the sequence (self.prefix_trie_match)
-        this method will search for occurrences over the whole text. 
+        """ Se um padrão é representado na trie e é um prefixo da sequência (self.prefix_trie_match), este método irá procurar por ocorrências em todo o texto.
 
         Args:
             text (str)
