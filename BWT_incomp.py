@@ -88,7 +88,7 @@ class BWT:
         return firstcol
         
 
-    def last_to_first(self):
+    def last_to_first(self) -> list[]:
         """
         Retorna uma lista com os índices mostrando qual a posição que o último caractere de cada sufixo 
         ordenado de uma Burrows-Wheeler Transform ocupa na primeira coluna.
