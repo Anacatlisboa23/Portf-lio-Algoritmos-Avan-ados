@@ -70,7 +70,7 @@ class SuffixTree:
 
     def get_leafes_below(self, node:int)->list[]:
         '''
-        Colects the leaves under a given node.
+        Coleciona as leaves à baixo de node expecifico.
         
         Args:
         node (int)
