@@ -46,9 +46,7 @@ class Automata:
                     self.current = self.patternSubSequence(symbol)
                     self.detected = False
 
-        #ou
-
-        return self.transitionTable.get(current,symbol)
+        
         
     def applySeq(self, seq:str)->list[]:
         """Função que aplica uma sequência de entrada ao autômato. Retorna a sequência de estados percorridos.
