@@ -47,13 +47,26 @@ class EAMotifsInt (EvolAlgorithm):
         indsize = len(self.motifs)
         EvolAlgorithm.__init__(self, popsize, numits, noffspring, indsize)
 
-    def initPopul(self, indsize):
+    def initPopul(self, indsize:int)-> None:
+        """
+        Função que inicia a população de individuos
+
+        Args:
+            indsize (int): Tamanho do indivíduo.
+        """
        
         maxvalue = self.motifs.seqSize(0) - self.motifs.motifSize
         self.popul = PopulInt(self.popsize, indsize,
                               maxvalue, [])
 
-    def evaluate(self, indivs):
+    def evaluate(self, indivs:list[])->None:
+        """
+
+        Funçaõ que avalia o fitness dos individuos na população.
+       
+        Args:
+            indivs (list): Lista de individuos a avaliar.
+        """
        
         for i in range(len(indivs)):
             ind = indivs[i]
