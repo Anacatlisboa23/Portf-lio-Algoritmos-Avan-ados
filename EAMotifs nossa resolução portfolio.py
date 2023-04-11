@@ -32,8 +32,16 @@ class EAMotifsInt (EvolAlgorithm):
 
     """
 
-    def __init__(self, popsize, numits, noffspring, filename):
-        
+    def __init__(self, popsize:int, numits:int, noffspring:int, filename:str)->None:
+        """
+        Inicializa o algoritmo.
+
+        Args:
+            popsize (int): Tamanho da população
+            numits (int): Número de iterações
+            noffspring (int): Número de filhos a serem gerados
+            filename (str): Nome do arquivo que contém as sequências de DNA
+        """
         self.motifs = MotifFinding()
         self.motifs.readFile(filename, "dna")
         indsize = len(self.motifs)
@@ -68,7 +76,7 @@ class EAMotifsReal (EvolAlgorithm):
 
       Returns: Lista com Motifs  
 """
-    def __init__(self, popsize:int, numits:int, noffspring:int, filename:str):
+    def __init__(self, popsize:int, numits:int, noffspring:int, filename:str)->None:
         """
         Inicializa o objeto EAMotifsReal.
 
@@ -83,7 +91,7 @@ class EAMotifsReal (EvolAlgorithm):
         indsize = self.motifs.motifSize * len(self.motifs.alphabet)
         EvolAlgorithm.__init__(self, popsize, numits, noffspring, indsize)
 
-    def initPopul(self, indsize:int):
+    def initPopul(self, indsize:int)->None:
         """
         Função que inicia a população de individuos
 
@@ -111,7 +119,7 @@ class EAMotifsReal (EvolAlgorithm):
                 self.pwm[c][idxcol]=col[c]/soma
         return pwm
                 
-    def evaluate(self, indivs:list[]):
+    def evaluate(self, indivs:list[])->None:
         """
 
         Funçaõ que avalia o fitness dos individuos na população.
