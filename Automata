@@ -52,7 +52,7 @@ class Automata:
         return res
         
     def occurencesPattern(self, text:str)->list[int]:
-        """Função para buscar todas as ocorrências do padrão no texto de entrada.
+        """Função que busca todas as ocorrências do padrão no texto de entrada.
         Args:
             text: uma string que representa o texto de entrada.
         Returns:
