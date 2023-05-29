@@ -15,7 +15,7 @@ class Trie:
         self.nodes[origin][symbol] = self.num
         self.nodes[self.num] = {}
     
-    def add_pattern(self, p:str): #p=padrão
+    def add_pattern(self, p:str)->None: #p=padrão
         """ Função que permite adicionar um padrão à trie.
 
         Argumento:
@@ -28,7 +28,7 @@ class Trie:
                 node=self.nodes[node][p[position]]
 
 
-    def trie_from_patterns(self, pats:list[]): #pats: lista padrões
+    def trie_from_patterns(self, pats: list[str]) -> None #pats: lista padrões
         """Função que permite adicionar cunjunto de padrões à trie
 
         Argumento:
@@ -62,7 +62,7 @@ class Trie:
             else : return None
     
         
-    def trie_matches(self, text:str)->list[]:
+    def trie_matches(self, text:str)->list[tuple[int, str]]:
         """ Se um padrão é representado na trie e é um prefixo da sequência (self.prefix_trie_match), este método irá procurar por ocorrências em todo o texto.
 
         Args:

@@ -59,7 +59,7 @@ class EAMotifsInt (EvolAlgorithm):
         self.popul = PopulInt(self.popsize, indsize,
                               maxvalue, [])
 
-    def evaluate(self, indivs:list[])->None:
+    def evaluate(self, indivs:list)->None:
         """
 
         Funçaõ que avalia o fitness dos individuos na população.
@@ -132,7 +132,7 @@ class EAMotifsReal (EvolAlgorithm):
                 self.pwm[c][idxcol]=col[c]/soma
         return pwm
                 
-    def evaluate(self, indivs:list[])->None:
+    def evaluate(self, indivs:list)->None:
         """
 
         Funçaõ que avalia o fitness dos individuos na população.

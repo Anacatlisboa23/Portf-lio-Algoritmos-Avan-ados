@@ -17,11 +17,11 @@ class MyGraph:
 
     ## get basic info
 
-    def get_nodes(self):
+    def get_nodes(self)->list[int]:
         ''' Returns list of nodes in the graph '''
         return list(self.graph.keys())
         
-    def get_edges(self): 
+    def get_edges(self)->list[tuple[int,int]]: 
         ''' Returns edges in the graph as a list of tuples (origin, destination) '''
         edges = []
         for v in self.graph.keys():
@@ -29,13 +29,13 @@ class MyGraph:
                 edges.append((v,d))
         return edges
       
-    def size(self):
+    def size(self)-> tuple[int, int]:
         ''' Returns size of the graph : number of nodes, number of edges '''
         return len(self.get_nodes()), len(self.get_edges())
       
     ## add nodes and edges    
     
-    def add_vertex(self, v):
+    def add_vertex(self, v:int)->None:
         ''' Add a vertex to the graph; tests if vertex exists not adding if it does '''
 
     # Check if the vertex already exists in the graph
@@ -45,7 +45,7 @@ class MyGraph:
         # Add the new vertex to the graph dictionary with an empty set as its value
             self.graph[v] = set()
 
-    def add_edge(self, o, d):
+    def add_edge(self, o:int, d:int):
         ''' Add edge to the graph; if vertices do not exist, they are added to the graph ''' 
         if o not in self.graph:
             self.add_vertex(x)
@@ -147,7 +147,7 @@ class MyGraph:
     
     ## BFS and DFS searches    
     
-    def reachable_bfs(self, v):
+    def reachable_bfs(self, v:int)->list[int]:
         l = [v]
         res = []
         while len(l) > 0:
@@ -205,7 +205,7 @@ class MyGraph:
                      queue.append((neighbour, dist+1))
             return None
     
-    def shortest_path(self, s:int, d:int)->list(int):
+    def shortest_path(self, s:int, d:int)->list[int]:
         """
     Retorna o menor caminho entre os nós `s` e `d` no grafo.
 
@@ -232,7 +232,7 @@ class MyGraph:
         
         
         
-    def reachable_with_dist(self, s):
+    def reachable_with_dist(self, s:int)->list[tuple[int,int]]:
         res = []
         l = [(s,0)]
         while len(l) > 0:
@@ -244,7 +244,16 @@ class MyGraph:
         return res
 
 ## cycles
-    def node_has_cycle (self, v):
+    def node_has_cycle (self, v:int)->bool:
+        """
+        Verifica se o nó `v` possui um ciclo no grafo.
+
+        Arguments:
+            v (int): O nó a ser verificado.
+
+        Returns:
+            bool: True se o nó `v` possui um ciclo no grafo, False caso contrário.
+        """
         l = [v]
         res = False
         visited = [v]
@@ -258,13 +267,29 @@ class MyGraph:
         return res
 
     def has_cycle(self):
+        """
+        Verifica se o grafo possui ciclos.
+
+        Returns:
+            bool: True se o grafo possui ciclos, False caso contrário.
+        """
         res = False
         for v in self.graph.keys():
             if self.node_has_cycle(v): return True
         return res
 
 
-def is_in_tuple_list (tl, val):
+def is_in_tuple_list (tl:list[tuple[int,int]], val:int)->bool:
+    """
+        Verifica se um valor está presente em uma lista de tuplas.
+
+        Arguments:
+            tl (list): A lista de tuplas.
+            val (int): O valor a ser verificado.
+
+        Returns:
+            bool: True se o valor está presente na lista de tuplas, False caso contrário.
+        """
     res = False
     for (x,y) in tl:
         if val == x: return True

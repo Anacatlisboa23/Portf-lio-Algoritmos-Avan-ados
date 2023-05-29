@@ -194,7 +194,7 @@ class MotifFinding:
         return bestMotifs
 
 
-    def roulette(self, f):
+    def roulette(self, f:list[float])->int:
         from random import random
         tot = 0.0
         for x in f: tot += (0.01+x)

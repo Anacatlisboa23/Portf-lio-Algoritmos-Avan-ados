@@ -22,7 +22,7 @@ class Automata:
         for k in self.transitionTable.keys():
             print (k[0], ",", k[1], " -> ", self.transitionTable[k])
          
-    def nextState(self, current, symbol):
+    def nextState(self, current:int, symbol)-> int:
        """ Função que calcula o próximo estado do autômato em função do estado atual e o símbolo de entrada.
             Args:
             current(int): nº inteiro que representa o estado atual do autômato.
@@ -35,7 +35,7 @@ class Automata:
         return current
             
         
-    def applySeq(self, seq:str)->list[]:
+    def applySeq(self, seq:str)->list[int]:
         """Função que aplica uma sequência de entrada ao autômato. Retorna a sequência de estados percorridos.
             Args
             seq: uma string que representa a sequência de entrada.
@@ -71,7 +71,7 @@ class Automata:
         return res
 
 
-def overlap(s1, s2):
+def overlap(s1:str, s2:str)->int:
     """" Função auxiliar que calcula a maior superposição entre duas cadeias.
     Args:
     s1(str): uma string que representa a primeira cadeia.
