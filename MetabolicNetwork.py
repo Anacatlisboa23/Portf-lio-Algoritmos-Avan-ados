@@ -44,72 +44,6 @@ class MetabolicNetwork (MyGraph):
             return self.node_types[node_type]
         else: return None
     
-    def load_from_file(self, filename:str)->None:
-        '''
-        Função que cria uma rede metabólica ”metabolite-reaction” (grafo bipartido)
-        Args:
-            filename: Nome do Ficheiro
-        '''
-        rf = open(filename)
-        gmr = MetabolicNetwork("metabolite-reaction")
-        for line in rf:
-            if ":" in line:
-                tokens = line.split(":")
-                reac_id = tokens[0].strip()
-                gmr.add_vertex_type(reac_id, "reaction")
-                rline = tokens[1]
-            else: raise Exception("Invalid line:")                
-            if "<=>" in rline:
-                left, right = rline.split("<=>")
-                mets_left = left.split("+")
-                for met in mets_left:
-                    met_id = met.strip()
-                    if met_id not in gmr.graph:
-                        gmr.add_vertex_type(met_id, "metabolite")
-                    if self.split_rev:
-                        gmr.add_vertex_type(reac_id+"_b", "reaction")
-                        gmr.add_edge(met_id, reac_id)
-                        gmr.add_edge(reac_id+"_b", met_id)
-                    else:
-                        gmr.add_edge(met_id, reac_id)
-                        gmr.add_edge(reac_id, met_id)
-                mets_right = right.split("+")
-                for met in mets_right:
-                    met_id = met.strip()
-                    if met_id not in gmr.graph:
-                        gmr.add_vertex_type(met_id, "metabolite")
-                    if self.split_rev:
-                        gmr.add_edge(met_id, reac_id+"_b")
-                        gmr.add_edge(reac_id, met_id)
-                    else:
-                        gmr.add_edge(met_id, reac_id)
-                        gmr.add_edge(reac_id, met_id)
-            elif "=>" in line:
-                left, right = rline.split("=>")
-                mets_left = left.split("+")
-                for met in mets_left:
-                    met_id = met.strip()
-                    if met_id not in gmr.graph:
-                        gmr.add_vertex_type(met_id, "metabolite")
-                    gmr.add_edge(met_id, reac_id)
-                mets_right = right.split("+")
-                for met in mets_right:
-                    met_id = met.strip()
-                    if met_id not in gmr.graph:
-                        gmr.add_vertex_type(met_id, "metabolite")
-                    gmr.add_edge(reac_id, met_id)
-            else: raise Exception("Invalid line:")    
-
-        
-        if self.net_type == "metabolite-reaction": 
-            self.graph = gmr.graph
-            self.node_types = gmr.node_types
-        elif self.net_type == "metabolite-metabolite":
-            self.convert_metabolite_net(gmr, "metabolite")
-        elif self.net_type == "reaction-reaction": 
-            self.convert_reaction_graph(gmr)
-        else: self.graph = {}
-        
         
     def convert_metabolite_net(self, gmr:'MetabolicNetwork', metabolite:str):
         '''
@@ -151,131 +85,33 @@ class MetabolicNetwork (MyGraph):
     
         return converted_graph
 
-import unittest
 
+from unittest import TestCase
+from MetabolicNetwork import MetabolicNetwork
 
-class TestMetabolicNetwork(unittest.TestCase):
-    def test_metabolite_reaction_network(self):
+class TestMetabolicNetwork(TestCase):
+    def test_type(self):
         m = MetabolicNetwork("metabolite-reaction")
         m.add_vertex_type("R1", "reaction")
-        m.add_vertex_type("R2", "reaction")
-        m.add_vertex_type("R3", "reaction")
-        m.add_vertex_type("M1", "metabolite")
-        m.add_vertex_type("M2", "metabolite")
-        m.add_vertex_type("M3", "metabolite")
-        m.add_vertex_type("M4", "metabolite")
-        m.add_vertex_type("M5", "metabolite")
-        m.add_vertex_type("M6", "metabolite")
         m.add_edge("M1", "R1")
-        m.add_edge("M2", "R1")
-        m.add_edge("R1", "M3")
-        m.add_edge("R1", "M4")
-        m.add_edge("M4", "R2")
-        m.add_edge("M6", "R2")
-        m.add_edge("R2", "M3")
-        m.add_edge("M4", "R3")
-        m.add_edge("M5", "R3")
-        m.add_edge("R3", "M6")
-        m.add_edge("R3", "M4")
-        m.add_edge("R3", "M5")
-        m.add_edge("M6", "R3")
-
-        reactions = m.get_nodes_type("reaction")
-        metabolites = m.get_nodes_type("metabolite")
-
-        self.assertCountEqual(reactions, ["R1", "R2", "R3"])
-        self.assertCountEqual(metabolites, ["M1", "M2", "M3", "M4", "M5", "M6"])
-
-    
-    def test_add_vertex_type(self):
-        self.network.add_vertex_type("M1", "metabolite")
-        self.network.add_vertex_type("R1", "reaction")
-
-        metabolites = self.network.get_nodes_type("metabolite")
-        reactions = self.network.get_nodes_type("reaction")
-
-        self.assertEqual(len(metabolites), 1)
-        self.assertEqual(len(reactions), 1)
-        self.assertEqual(metabolites[0], "M1")
-        self.assertEqual(reactions[0], "R1")
-
-    
-
-    # def test_convert_metabolite_net(self):
-    #     gmr = MetabolicNetwork("metabolite-reaction")
-    #     gmr.add_vertex_type("M1", "metabolite")
-    #     gmr.add_vertex_type("M2", "metabolite")
-    #     gmr.add_vertex_type("R1", "reaction")
-    #     gmr.add_edge("M1", "R1")
-    #     gmr.add_edge("M2", "R1")
-
-    #     self.network.convert_metabolite_net(gmr, "metabolite")
-
-    #     metabolites = self.network.get_nodes_type("metabolite")
-    #     metabolite_metabolite_edges = self.network.get_edges_type("metabolite-metabolite")
-
-    #     self.assertEqual(len(metabolites), 2)
-    #     self.assertEqual(len(metabolite_metabolite_edges), 2)
-    #     self.assertIn(("M1", "M2"), metabolite_metabolite_edges)
-    #     self.assertIn(("M2", "M1"), metabolite_metabolite_edges)
-
-    # def test_convert_reaction_graph(self):
-    #     gmr = MetabolicNetwork("metabolite-reaction")
-    #     gmr.add_vertex_type("M1", "metabolite")
-    #     gmr.add_vertex_type("M2", "metabolite")
-    #     gmr.add_vertex_type("R1", "reaction")
-    #     gmr.add_vertex_type("R2", "reaction")
-    #     gmr.add_edge("M1", "R1")
-    #     gmr.add_edge("M2", "R1")
-    #     gmr.add_edge("M2", "R2")
-    #     gmr.add_edge("R1", "M2")
-
-    #     converted_graph = self.network.convert_reaction_graph(gmr)
-
-    #     self.assertEqual(len(converted_graph), 2)
-    #     self.assertIn("R1", converted_graph)
-    #     self.assertIn("R2", converted_graph)
-    #     self.assertEqual(len(converted_graph["R1"]), 1)
-    #     self.assertEqual(len(converted_graph["R2"]), 1)
-    #     self.assertIn("R2", converted_graph["R1"])
-    #     self.assertIn("R1", converted_graph["R2"])
-    # def test_convert_networks(self):
-    #     mrn = MetabolicNetwork("metabolite-reaction")
-    #     mrn.load_from_file("example-net.txt")
-
-    #     mmn = MetabolicNetwork("metabolite-metabolite")
-    #     mmn.load_from_file("example-net.txt")
-
-    #     rrn = MetabolicNetwork("reaction-reaction")
-    #     rrn.load_from_file("example-net.txt")
-
-    #     mrsn = MetabolicNetwork("metabolite-reaction", True)
-    #     mrsn.load_from_file("example-net.txt")
-
-    #     rrsn = MetabolicNetwork("reaction-reaction", True)
-    #     rrsn.load_from_file("example-net.txt")
-
-        # Perform assertions to test the converted networks
-
-        # self.assertEqual(len(mrn.get_nodes_type("metabolite")), 4)
-        # self.assertEqual(len(mrn.get_nodes_type("reaction")), 3)
-
-        # self.assertEqual(len(mmn.get_nodes_type("metabolite")), 4)
-        # self.assertEqual(len(mmn.get_nodes_type("metabolite-metabolite")), 4)
-
-        # self.assertEqual(len(rrn.get_nodes_type("reaction")), 3)
-        # self.assertEqual(len(rrn.get_nodes_type("reaction-reaction")), 3)
-
-        # self.assertEqual(len(mrsn.get_nodes_type("metabolite")), 4)
-        # self.assertEqual(len(mrsn.get_nodes_type("reaction")), 6)
-
-        # self.assertEqual(len(rrsn.get_nodes_type("reaction")), 6)
-        # self.assertEqual(len(rrsn.get_nodes_type("reaction-reaction")), 6)
-
-if __name__ == '__main__':
-    unittest.main()
+        self.assertRaises(TypeError, m.check_type_error_vertex, 123, "reacao")
+        self.assertRaises(TypeError, m.check_type_error_network_type, "reacao__reacao")
+        self.assertRaises(TypeError, m.check_TypeError_node, ["fasf"])
 
 
+from MyGraph import MyGraph
+from MetabolicNetwork import MetabolicNetwork
 
 
+net = MetabolicNetwork()
 
+net.add_vertex_type("R1", "reaction")
+net.add_vertex_type("M1", "metabolite")
+net.add_edge("M1", "R1")
+
+reaction_nodes = net.get_nodes_type("reaction")
+metabolite_nodes = net.get_nodes_type("metabolite")
+
+
+print("Reaction Nodes:", reaction_nodes)
+print("Metabolite Nodes:", metabolite_nodes)

@@ -70,6 +70,9 @@ def composition(k:int, seq:str)->list[str]:
     res.sort()
     return res
 
+
+
+
 from unittest import TestCase
 import debruijn as db
 
@@ -98,7 +101,6 @@ class TestDeBruijnGraph(TestCase):
 
 
 
-#test2()
-#print()
-#test3()
+
+
     
