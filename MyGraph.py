@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-## Graph represented as adjacency list using a dictionary
-## keys are vertices
-## values of the dictionary represent the list of adjacent vertices of the key node
 
 class MyGraph:
     
@@ -48,9 +45,9 @@ class MyGraph:
     def add_edge(self, o:int, d:int):
         ''' Add edge to the graph; if vertices do not exist, they are added to the graph ''' 
         if o not in self.graph:
-            self.add_vertex(x)
+            self.add_vertex(o)
         if d not in self.graph:
-            self.add_certex(y)
+            self.add_certex(d)
 
         self.graph[o].add(d)
         self.graph[d].add(o)
