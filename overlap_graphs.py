@@ -4,7 +4,7 @@ from MyGraph import MyGraph
 
 class OverlapGraph(MyGraph):
     
-    def __init__(self, frags):
+    def __init__(self, frags:list[str]):
         MyGraph.__init__(self, {})
         self.create_overlap_graph(frags)
 
@@ -15,14 +15,20 @@ class OverlapGraph(MyGraph):
         
     
     ## create overlap graph from list of sequences (fragments)
-    def create_overlap_graph(self, frags):
+    def create_overlap_graph(self, frags:list[str])->None:
          for seq in frags:
             self.add_vertex(seq)
         for g in frags:
             for f in frags:
                 if suffix(g) == prefix(f): self.add_edge(g, f)
         
-    def create_overlap_graph_with_reps(self, frags):  # caso de replicas de fragmentos
+    def create_overlap_graph_with_reps(self, frags:list[str])->None: 
+        """
+        Creates an overlap graph from a list of DNA sequence fragments allowing duplicates.
+
+        Args:
+            frags: A list of DNA sequence fragments.
+        """ 
         idnum = 1
         for seq in frags:
             self.add_vertex(seq + "-" + str(idnum))
@@ -36,19 +42,47 @@ class OverlapGraph(MyGraph):
                         self.add_edge(seq + "-" + str(idnum), x)
         idnum = idnum + 1
     
-    def get_instances(self, seq):
+    def get_instances(self, seq:str)->list[str]:
+        """
+        Get all instances of a DNA sequence in the graph.
+
+        Args:
+            seq: A DNA sequence.
+
+        Returns:
+            A list of instances of the DNA sequence.
+        """
         res = []
         for k in self.graph.keys():
             if seq in k: res.append(k)
         return res
     
-    def get_seq(self, node):
+    def get_seq(self, node:str)->None:
+        """
+        Get the DNA sequence from a node in the graph.
+
+        Args:
+            node: A node in the graph.
+
+        Returns:
+            The DNA sequence of the node if found, otherwise None.
+        """
         if node not in self.graph.keys(): return None
         if self.reps: return node.split("-")[0]
         else: return node
     
     def seq_from_path(self, path):
-        # ...
+         if len(path) == 0:
+
+    sequence = self.get_seq(path[0])
+    for i in range(1, len(path)):
+        node = path[i]
+        seq = self.get_seq(node)
+        if seq is not None:
+            suffix = seq[-1]
+            sequence += suffix
+
+    return sequence
         return seq    
    
                     
