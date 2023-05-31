@@ -52,15 +52,14 @@ class MetabolicNetwork (MyGraph):
             gmr: Rede Metabólica
             metabolite: O tipo de nó é reaction ou metabolite
         '''
-        for tipo_de_no in gmr.node_types[metabolite]:  # Obtém todos os metabolitos ou reações
-            self.add_vertex(tipo_de_no)  # Adiciona o metabolito ou reação á rede
-            successors = gmr.get_successors(
-                tipo_de_no)  # Se o tipo de nó for (metabolite) obtém as reações de cada metabolito, Exemplo: M1 -> R1
+        for type_of_node in gmr.node_types[metabolite]:  # Obtém todos os metabolitos ou reações
+            self.add_vertex(type_of_node)  # Adiciona o metabolito ou reação á rede
+            successors = gmr.get_successors(type_of_node)  # Se o tipo de nó for (metabolite) obtém as reações de cada metabolito, Exemplo: M1 -> R1
             for s in successors:
-                succesors_tipo_de_no = gmr.get_successors(s)  # Obtém os metabolitos de cada reação, Exemplo: R2 -> M3
-                for s2 in succesors_tipo_de_no:  # Obtém o metabolito resultante da reação
-                    if tipo_de_no != s2:  # Se o metabolito for diferente do metabolito da reação:
-                        self.add_edge(tipo_de_no, s2)  # Adiciona a ligação
+                succesors_type_of_node = gmr.get_successors(s)  # Obtém os metabolitos de cada reação, Exemplo: R2 -> M3
+                for s2 in succesors_type_of_node:  # Obtém o metabolito resultante da reação
+                    if type_of_node != s2:  # Se o metabolito for diferente do metabolito da reação:
+                        self.add_edge(type_of_node, s2)  # Adiciona a ligação
 
         
     def convert_reaction_graph(self, gmr: 'MetabolicNetwork')-> dict[str, list[str]]:

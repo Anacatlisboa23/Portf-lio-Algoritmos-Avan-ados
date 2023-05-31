@@ -70,7 +70,9 @@ def composition(k:int, seq:str)->list[str]:
     res.sort()
     return res
 
-
+def print_graph(self):
+    for vertex, neighbors in self.graph.items():
+        print(f"{vertex}: {', '.join(neighbors)}")
 
 
 from unittest import TestCase
@@ -98,6 +100,13 @@ class TestDeBruijnGraph(TestCase):
         self.assertRaises(TypeError, dbgr.check_frags, ["phge"])
         self.assertRaises(TypeError, dbgr.check_frags, True)
         self.assertRaises(TypeError, dbgr.check_frags, 1654)
+
+
+
+
+frags = ["ATA", "ACC", "ATG", "ATT", "CAT", "CAT", "CAT", "CCA", "GCA", "GGC", "TAA", "TCA", "TGG", "TTC", "TTT"]
+dbgr = DeBruijnGraph(frags)
+dbgr.print_graph()
 
 
 
